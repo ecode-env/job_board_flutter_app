@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "56463360767",
+    "project_id": "job-board-app-422b9",
+    "storage_bucket": "job-board-app-422b9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56463360767:android:9e5a9b34fcdd0115a782ca",
+        "android_client_info": {
+          "package_name": "com.example.job_board_flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc2zzsQSPx4idPgMmrS-ycqdL7QUqs8hA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
