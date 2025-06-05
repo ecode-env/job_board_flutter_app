@@ -1,0 +1,365 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:job_board_flutter_app/models/job_model.dart';
+import 'package:job_board_flutter_app/services/auth_service.dart';
+import 'package:job_board_flutter_app/services/job_service.dart';
+import 'package:job_board_flutter_app/widgets/custom_button.dart';
+import 'package:job_board_flutter_app/widgets/custom_text_field.dart';
+import 'package:job_board_flutter_app/utils/validators.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+
+class ApplyScreen extends StatefulWidget {
+  final JobModel job;
+
+  const ApplyScreen({
+    super.key,
+    required this.job,
+  });
+
+  @override
+  State<ApplyScreen> createState() => _ApplyScreenState();
+}
+
+class _ApplyScreenState extends State<ApplyScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _coverLetterController = TextEditingController();
+  
+  File? _resumeFile;
+  String? _resumeFileName;
+  bool _isSubmitting = false;
+  String? _errorMessage;
+
+  @override
+  void dispose() {
+    _coverLetterController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickResume() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'docx'],
+      );
+
+      if (result != null) {
+        setState(() {
+          _resumeFile = File(result.files.single.path!);
+          _resumeFileName = result.files.single.name;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Failed to pick file: $e';
+      });
+    }
+  }
+
+  Future<void> _submitApplication() async {
+    if (_formKey.currentState!.validate()) {
+      if (_resumeFile == null) {
+        setState(() {
+          _errorMessage = 'Please upload your resume';
+        });
+        return;
+      }
+
+      setState(() {
+        _isSubmitting = true;
+        _errorMessage = null;
+      });
+
+      try {
+        final authService = Provider.of<AuthService>(context, listen: false);
+        final jobService = Provider.of<JobService>(context, listen: false);
+        
+        if (authService.user == null) {
+          setState(() {
+            _errorMessage = 'You must be logged in to apply';
+            _isSubmitting = false;
+          });
+          return;
+        }
+        
+        // In a real app, you'd upload the resume to storage
+        // and get a download URL. For this example, we'll use a mock URL.
+        String mockResumeUrl = 'https://example.com/resumes/${authService.user!.id}_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        
+        // Apply for the job
+        await jobService.applyForJob(
+          jobId: widget.job.id,
+          userId: authService.user!.id,
+          resumeUrl: mockResumeUrl,
+          coverLetter: _coverLetterController.text.trim(),
+        );
+        
+        // Update user's applied jobs
+        await authService.addAppliedJob(widget.job.id);
+        
+        if (mounted) {
+          // Show success dialog
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              title: const Text('Application Submitted'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 64,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Your application for ${widget.job.title} has been submitted successfully!',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close dialog
+                    Navigator.of(context).pop(); // Go back to job details
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      } catch (e) {
+        setState(() {
+          _errorMessage = 'Failed to submit application: $e';
+        });
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isSubmitting = false;
+          });
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Apply for Job'),
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Job Info
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Applying for:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        widget.job.title,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        widget.job.company,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            size: 16,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            widget.job.location,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                
+                const SizedBox(height: 24),
+                
+                // Error Message
+                if (_errorMessage != null) ...[
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.error.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            _errorMessage!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+                
+                // Resume Upload
+                Text(
+                  'Resume',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: _pickResume,
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: _resumeFile != null
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            _resumeFile != null ? Icons.description : Icons.upload_file,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _resumeFile != null ? 'Resume uploaded' : 'Upload your resume',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: _resumeFile != null
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(context).colorScheme.onSurface,
+                                ),
+                              ),
+                              if (_resumeFileName != null) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  _resumeFileName!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                                  ),
+                                ),
+                              ] else ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  'PDF, DOC, or DOCX (max 5MB)',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 24),
+                
+                // Cover Letter
+                Text(
+                  'Cover Letter',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  controller: _coverLetterController,
+                  hintText: 'Why should you be hired for this position?',
+                  maxLines: 8,
+                  textInputAction: TextInputAction.newline,
+                  keyboardType: TextInputType.multiline,
+                  validator: Validators.validateRequired,
+                ),
+                
+                const SizedBox(height: 32),
+                
+                // Submit Button
+                CustomButton(
+                  text: 'Submit Application',
+                  onPressed: _isSubmitting ? null : _submitApplication,
+                  isLoading: _isSubmitting,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

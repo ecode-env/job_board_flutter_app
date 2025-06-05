@@ -1,0 +1,265 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:job_board_flutter_app/models/job_model.dart';
+import 'package:job_board_flutter_app/models/application_model.dart';
+import 'package:uuid/uuid.dart';
+
+class JobService with ChangeNotifier {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final List<JobModel> _jobs = [];
+  List<JobModel> get jobs => _jobs;
+  
+  String _searchQuery = '';
+  String get searchQuery => _searchQuery;
+  
+  String _locationFilter = '';
+  String get locationFilter => _locationFilter;
+  
+  // Set search query
+  void setSearchQuery(String query) {
+    _searchQuery = query;
+    notifyListeners();
+  }
+  
+  // Set location filter
+  void setLocationFilter(String location) {
+    _locationFilter = location;
+    notifyListeners();
+  }
+  
+  // Get all jobs
+  Future<List<JobModel>> getAllJobs() async {
+    try {
+      QuerySnapshot snapshot = await _firestore.collection('jobs').orderBy('postedDate', descending: true).get();
+      
+      _jobs.clear();
+      
+      for (var doc in snapshot.docs) {
+        JobModel job = JobModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+        _jobs.add(job);
+      }
+      
+      notifyListeners();
+      return _jobs;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  // Get filtered jobs
+  List<JobModel> getFilteredJobs() {
+    if (_searchQuery.isEmpty && _locationFilter.isEmpty) {
+      return _jobs;
+    }
+    
+    return _jobs.where((job) {
+      bool matchesSearch = _searchQuery.isEmpty ||
+          job.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          job.company.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          job.description.toLowerCase().contains(_searchQuery.toLowerCase());
+      
+      bool matchesLocation = _locationFilter.isEmpty ||
+          job.location.toLowerCase().contains(_locationFilter.toLowerCase());
+      
+      return matchesSearch && matchesLocation;
+    }).toList();
+  }
+  
+  // Get job by ID
+  Future<JobModel?> getJobById(String jobId) async {
+    try {
+      DocumentSnapshot doc = await _firestore.collection('jobs').doc(jobId).get();
+      
+      if (doc.exists) {
+        return JobModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+      }
+      
+      return null;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  // Create a new job
+  Future<JobModel> createJob(JobModel job) async {
+    try {
+      DocumentReference docRef = await _firestore.collection('jobs').add(job.toMap());
+      
+      JobModel newJob = JobModel(
+        id: docRef.id,
+        title: job.title,
+        company: job.company,
+        description: job.description,
+        location: job.location,
+        requirements: job.requirements,
+        salary: job.salary,
+        posterID: job.posterID,
+        contactEmail: job.contactEmail,
+        contactPhone: job.contactPhone,
+        postedDate: job.postedDate,
+        employmentType: job.employmentType,
+        companyLogo: job.companyLogo,
+        isRemote: job.isRemote,
+      );
+      
+      _jobs.add(newJob);
+      notifyListeners();
+      
+      return newJob;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  // Apply for a job
+  Future<void> applyForJob({
+    required String jobId,
+    required String userId,
+    required String resumeUrl,
+    String coverLetter = '',
+  }) async {
+    try {
+      final uuid = Uuid();
+      String applicationId = uuid.v4();
+      
+      ApplicationModel application = ApplicationModel(
+        id: applicationId,
+        jobId: jobId,
+        userId: userId,
+        resumeUrl: resumeUrl,
+        coverLetter: coverLetter,
+        appliedDate: DateTime.now(),
+      );
+      
+      await _firestore.collection('applications').doc(applicationId).set(application.toMap());
+      
+      // Increment application count for the job
+      DocumentSnapshot jobDoc = await _firestore.collection('jobs').doc(jobId).get();
+      if (jobDoc.exists) {
+        int currentCount = (jobDoc.data() as Map<String, dynamic>)['applicationCount'] ?? 0;
+        await _firestore.collection('jobs').doc(jobId).update({
+          'applicationCount': currentCount + 1,
+        });
+      }
+      
+      // Update the local job list
+      int index = _jobs.indexWhere((job) => job.id == jobId);
+      if (index != -1) {
+        _jobs[index] = _jobs[index].copyWith(applicationCount: _jobs[index].applicationCount + 1);
+        notifyListeners();
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  // Get user's job applications
+  Future<List<ApplicationModel>> getUserApplications(String userId) async {
+    try {
+      QuerySnapshot snapshot = await _firestore
+          .collection('applications')
+          .where('userId', isEqualTo: userId)
+          .orderBy('appliedDate', descending: true)
+          .get();
+      
+      List<ApplicationModel> applications = [];
+      
+      for (var doc in snapshot.docs) {
+        ApplicationModel application = ApplicationModel.fromMap(
+          doc.data() as Map<String, dynamic>,
+          doc.id,
+        );
+        applications.add(application);
+      }
+      
+      return applications;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  // Get jobs posted by a specific user
+  Future<List<JobModel>> getJobsPostedByUser(String userId) async {
+    try {
+      QuerySnapshot snapshot = await _firestore
+          .collection('jobs')
+          .where('posterID', isEqualTo: userId)
+          .orderBy('postedDate', descending: true)
+          .get();
+      
+      List<JobModel> postedJobs = [];
+      
+      for (var doc in snapshot.docs) {
+        JobModel job = JobModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+        postedJobs.add(job);
+      }
+      
+      return postedJobs;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  // Get applications for a specific job
+  Future<List<ApplicationModel>> getJobApplications(String jobId) async {
+    try {
+      QuerySnapshot snapshot = await _firestore
+          .collection('applications')
+          .where('jobId', isEqualTo: jobId)
+          .orderBy('appliedDate', descending: true)
+          .get();
+      
+      List<ApplicationModel> applications = [];
+      
+      for (var doc in snapshot.docs) {
+        ApplicationModel application = ApplicationModel.fromMap(
+          doc.data() as Map<String, dynamic>,
+          doc.id,
+        );
+        applications.add(application);
+      }
+      
+      return applications;
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+extension JobModelExtension on JobModel {
+  JobModel copyWith({
+    String? id,
+    String? title,
+    String? company,
+    String? description,
+    String? location,
+    List<String>? requirements,
+    String? salary,
+    String? posterID,
+    String? contactEmail,
+    String? contactPhone,
+    DateTime? postedDate,
+    String? employmentType,
+    String? companyLogo,
+    bool? isRemote,
+    int? applicationCount,
+  }) {
+    return JobModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      company: company ?? this.company,
+      description: description ?? this.description,
+      location: location ?? this.location,
+      requirements: requirements ?? this.requirements,
+      salary: salary ?? this.salary,
+      posterID: posterID ?? this.posterID,
+      contactEmail: contactEmail ?? this.contactEmail,
+      contactPhone: contactPhone ?? this.contactPhone,
+      postedDate: postedDate ?? this.postedDate,
+      employmentType: employmentType ?? this.employmentType,
+      companyLogo: companyLogo ?? this.companyLogo,
+      isRemote: isRemote ?? this.isRemote,
+      applicationCount: applicationCount ?? this.applicationCount,
+    );
+  }
+}
