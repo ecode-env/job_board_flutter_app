@@ -253,7 +253,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                _resumeFile != null ? 'Resume uploaded' : 'Upload your resume',
+                                _resumeFile != null ? 'Resume selected' : 'Upload your resume',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: _resumeFile != null
