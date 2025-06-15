@@ -63,10 +63,10 @@ class _ApplyScreenState extends State<ApplyScreen> {
       return;
     }
 
-      setState(() {
-        _isSubmitting = true;
-        _errorMessage = null;
-      });
+    setState(() {
+      _isSubmitting = true;
+      _errorMessage = null;
+    });
 
       try {
         final authService = Provider.of<AuthService>(context, listen: false);
