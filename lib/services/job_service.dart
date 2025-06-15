@@ -27,8 +27,7 @@ class JobService with ChangeNotifier {
     _locationFilter = location;
     notifyListeners();
   }
-  
-  // Get all jobs
+
   Future<List<JobModel>> getAllJobs() async {
     try {
       QuerySnapshot snapshot = await _firestore.collection('jobs').orderBy('postedDate', descending: true).get();
