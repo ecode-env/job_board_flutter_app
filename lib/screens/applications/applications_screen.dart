@@ -167,9 +167,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
                         .withOpacity(0.7))),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: () {
-                // Navigate to post job screen
-              },
+              onPressed: () {},
               icon: const Icon(Icons.add),
               label: const Text('Post a Job'),
             ),
