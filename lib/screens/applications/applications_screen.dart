@@ -35,7 +35,8 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: widget.showPostedJobs ? 2 : 1, vsync: this);
+    _tabController =
+        TabController(length: widget.showPostedJobs ? 2 : 1, vsync: this);
     _loadData();
   }
 
