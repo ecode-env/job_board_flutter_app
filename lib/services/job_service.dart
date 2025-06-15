@@ -120,8 +120,7 @@ class JobService with ChangeNotifier {
           'applicationCount': currentCount + 1,
         });
       }
-      
-      // Update the local job list
+
       int index = _jobs.indexWhere((job) => job.id == jobId);
       if (index != -1) {
         _jobs[index] = _jobs[index].copyWith(applicationCount: _jobs[index].applicationCount + 1);
