@@ -81,8 +81,17 @@ class JobService with ChangeNotifier {
       rethrow;
     }
   }
-  
-  // Apply for a job
+
+  Future<String> uploadResume(File file, String userId) async {
+    try {
+      String fileName = 'resumes/$userId-${DateTime.now().millisecondsSinceEpoch}.pdf';
+      TaskSnapshot snapshot = await _storage.ref(fileName).putFile(file);
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      throw Exception('Failed to upload resume: $e');
+    }
+  }
+
   Future<void> applyForJob({
     required String jobId,
     required String userId,
