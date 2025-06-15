@@ -146,8 +146,7 @@ class JobService with ChangeNotifier {
       rethrow;
     }
   }
-  
-  // Get jobs posted by a specific user
+
   Future<List<JobModel>> getJobsPostedByUser(String userId) async {
     try {
       QuerySnapshot snapshot = await _firestore
@@ -155,15 +154,10 @@ class JobService with ChangeNotifier {
           .where('posterID', isEqualTo: userId)
           .orderBy('postedDate', descending: true)
           .get();
-      
-      List<JobModel> postedJobs = [];
-      
-      for (var doc in snapshot.docs) {
-        JobModel job = JobModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
-        postedJobs.add(job);
-      }
-      
-      return postedJobs;
+
+      return snapshot.docs
+          .map((doc) => JobModel.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+          .toList();
     } catch (e) {
       rethrow;
     }
