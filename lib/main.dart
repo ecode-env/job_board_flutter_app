@@ -22,13 +22,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return di.MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeService()),
-        ChangeNotifierProvider(create: (_) => AuthService()),
-        ChangeNotifierProvider(create: (_) => JobService()),
+        di.ChangeNotifierProvider(create: (_) => ThemeService()),
+        di.ChangeNotifierProvider(create: (_) => AuthService()),
+        di.ChangeNotifierProvider(create: (_) => JobService()),
+        di.Provider(create: (_) => StorageService()),
       ],
-      child: Consumer<ThemeService>(
+      child: di.Consumer<ThemeService>(
         builder: (context, themeService, child) {
           return MaterialApp(
             title: 'Job Board',
