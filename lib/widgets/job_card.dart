@@ -159,7 +159,7 @@ class JobCard extends StatelessWidget {
                 ),
               ],
             ),
-            
+
             // Status indicators for applied jobs or application count
             if (isApplied || showApplicationCount) ...[
               const SizedBox(height: 12),
