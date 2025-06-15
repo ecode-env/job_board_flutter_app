@@ -14,7 +14,7 @@ class ApplicationsScreen extends StatefulWidget {
   final bool showPostedJobs;
 
   const ApplicationsScreen({
-    super.key,
+    Key? key,
     this.showPostedJobs = false,
   });
 
