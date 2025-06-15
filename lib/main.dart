@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:job_board_flutter_app/services/theme_service.dart';
-import 'package:job_board_flutter_app/services/auth_service.dart';
-import 'package:job_board_flutter_app/services/job_service.dart';
-import 'package:job_board_flutter_app/models/user_model.dart';
-import 'package:job_board_flutter_app/screens/splash_screen.dart';
+import 'package:provider/provider.dart' as di;
 import 'package:firebase_core/firebase_core.dart';
+
+import 'services/theme_service.dart';
+import 'services/auth_service.dart';
+import 'services/job_service.dart';
+import 'services/storage_service.dart';
+import 'models/job_model.dart';
+import 'models/user_model.dart';
+import 'screens/splash_screen.dart';
+import 'screens/applications/apply_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
