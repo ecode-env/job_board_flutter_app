@@ -13,11 +13,7 @@ import '../../widgets/custom_text_field.dart';
 
 class ApplyScreen extends StatefulWidget {
   final JobModel job;
-
-  const ApplyScreen({
-    super.key,
-    required this.job,
-  });
+  const ApplyScreen({super.key, required this.job});
 
   @override
   State<ApplyScreen> createState() => _ApplyScreenState();
