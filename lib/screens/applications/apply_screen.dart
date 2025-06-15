@@ -169,10 +169,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        widget.job.company,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
+                      Text(widget.job.company, style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 4),
                       Row(
                         children: [
