@@ -213,10 +213,9 @@ class _ApplyScreenState extends State<ApplyScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
-                ],
-                
-                // Resume Upload
+                const SizedBox(height: 24),
+
+                // Resume Picker
                 Text(
                   'Resume',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
