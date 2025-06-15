@@ -226,13 +226,13 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.onSurface)),
             const SizedBox(height: 8),
-            Text(
-              'Your job applications will appear here',
-              style: TextStyle(
-                fontSize: 14,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-              ),
-            ),
+            Text('Your job applications will appear here',
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.7))),
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () {
