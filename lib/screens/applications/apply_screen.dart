@@ -297,7 +297,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                 ),
 
                 const SizedBox(height: 32),
-                
+
                 // Submit Button
                 CustomButton(
                   text: 'Submit Application',
