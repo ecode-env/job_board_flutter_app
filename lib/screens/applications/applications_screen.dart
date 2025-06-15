@@ -7,6 +7,8 @@ import 'package:job_board_flutter_app/models/application_model.dart';
 import 'package:job_board_flutter_app/widgets/job_card.dart';
 import 'package:job_board_flutter_app/widgets/application_card.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+// Import the new ApplicantsScreen
+import 'package:job_board_flutter_app/screens/applications/applicants_screen.dart';
 
 class ApplicationsScreen extends StatefulWidget {
   final bool showPostedJobs;
