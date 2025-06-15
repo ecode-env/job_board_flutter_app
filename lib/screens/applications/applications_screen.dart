@@ -253,7 +253,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         itemBuilder: (context, index) {
           final application = _applications[index];
           final job = _jobsMap[application.jobId];
-          
+
           if (job == null) {
             return const SizedBox.shrink();
           }
