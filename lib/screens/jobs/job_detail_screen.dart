@@ -423,16 +423,14 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                                   ),
                                 ),
                                 const SizedBox(height: 16),
-                                SingleChildScrollView(
-                                  child: const Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                                    'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-                                    'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris '
-                                    'nisi ut aliquip ex ea commodo consequat.',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      height: 1.5,
-                                    ),
+                                Text(
+                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                                      'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+                                      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris '
+                                      'nisi ut aliquip ex ea commodo consequat.',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    height: 1.5,
                                   ),
                                 ),
                                 const SizedBox(height: 24),
