@@ -318,26 +318,29 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                   // Quick Info Chips (horizontal scroll)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        _InfoChip(
-                          icon: Icons.work_outline,
-                          label: widget.job.employmentType,
-                        ),
-                        const SizedBox(width: 8),
-                        _InfoChip(
-                          icon: Icons.attach_money,
-                          label: widget.job.salary,
-                        ),
-                        const SizedBox(width: 8),
-                        _InfoChip(
-                          icon: Icons.location_on,
-                          label: widget.job.isRemote ? 'Remote' : 'On-site',
-                        ),
-                      ],
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          _InfoChip(
+                            icon: Icons.work_outline,
+                            label: widget.job.employmentType,
+                          ),
+                          const SizedBox(width: 8),
+                          _InfoChip(
+                            icon: Icons.attach_money,
+                            label: widget.job.salary,
+                          ),
+                          const SizedBox(width: 8),
+                          _InfoChip(
+                            icon: Icons.location_on,
+                            label: widget.job.isRemote ? 'Remote' : 'On-site',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 16),
                   
                   // Tabs
