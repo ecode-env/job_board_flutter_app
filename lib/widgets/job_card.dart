@@ -117,7 +117,7 @@ class JobCard extends StatelessWidget {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 12),
             
             // Job title
