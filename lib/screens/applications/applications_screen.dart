@@ -105,11 +105,11 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
       ),
       body: _isLoading
           ? Center(
-              child: SpinKitThreeBounce(
-                color: Theme.of(context).colorScheme.primary,
-                size: 30,
-              ),
-            )
+        child: SpinKitThreeBounce(
+          color: Theme.of(context).colorScheme.primary,
+          size: 30,
+        ),
+      )
           : _errorMessage != null
               ? Center(
                   child: Column(
