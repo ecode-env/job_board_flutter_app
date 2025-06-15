@@ -107,6 +107,7 @@ class JobCard extends StatelessWidget {
                         : Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                   ),
                   onPressed: () {
+                    if (authService == null) return;
                     if (isSaved) {
                       Provider.of<AuthService>(context, listen: false).unsaveJob(job.id);
                     } else {
