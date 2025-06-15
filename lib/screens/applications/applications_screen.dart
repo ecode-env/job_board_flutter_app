@@ -62,8 +62,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         });
         return;
       }
-      
-      // Load all jobs first
+
       await jobService.getAllJobs();
       
       if (widget.showPostedJobs) {
