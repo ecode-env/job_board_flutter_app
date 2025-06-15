@@ -22,8 +22,7 @@ class JobService with ChangeNotifier {
     _searchQuery = query;
     notifyListeners();
   }
-  
-  // Set location filter
+
   void setLocationFilter(String location) {
     _locationFilter = location;
     notifyListeners();
