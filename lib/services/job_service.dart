@@ -8,6 +8,7 @@ import 'package:job_board_flutter_app/models/application_model.dart';
 
 class JobService with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
   final List<JobModel> _jobs = [];
   List<JobModel> get jobs => _jobs;
   
