@@ -186,9 +186,22 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
           final job = _postedJobs[index];
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: JobCard(
-              job: job,
-              showApplicationCount: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                JobCard(job: job, showApplicationCount: true),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => ApplicantsScreen(job: job)));
+                    },
+                    child: const Text('View Applicants'),
+                  ),
+                ),
+              ],
             ),
           );
         },
