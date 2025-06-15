@@ -101,7 +101,7 @@ class JobService with ChangeNotifier {
     try {
       final uuid = Uuid();
       String applicationId = uuid.v4();
-      
+
       ApplicationModel application = ApplicationModel(
         id: applicationId,
         jobId: jobId,
