@@ -142,7 +142,7 @@ class JobCard extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            
+
             const SizedBox(height: 16),
             
             // Job info chips
