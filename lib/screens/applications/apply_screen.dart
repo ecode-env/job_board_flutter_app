@@ -35,7 +35,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
 
   Future<void> _pickResume() async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf', 'doc', 'docx'],
       );
