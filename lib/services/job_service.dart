@@ -110,10 +110,9 @@ class JobService with ChangeNotifier {
         coverLetter: coverLetter,
         appliedDate: DateTime.now(),
       );
-      
+
       await _firestore.collection('applications').doc(applicationId).set(application.toMap());
-      
-      // Increment application count for the job
+
       DocumentSnapshot jobDoc = await _firestore.collection('jobs').doc(jobId).get();
       if (jobDoc.exists) {
         int currentCount = (jobDoc.data() as Map<String, dynamic>)['applicationCount'] ?? 0;
