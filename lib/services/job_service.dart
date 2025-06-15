@@ -31,7 +31,6 @@ class JobService with ChangeNotifier {
   Future<List<JobModel>> getAllJobs() async {
     try {
       QuerySnapshot snapshot = await _firestore.collection('jobs').orderBy('postedDate', descending: true).get();
-      
       _jobs.clear();
       
       for (var doc in snapshot.docs) {
