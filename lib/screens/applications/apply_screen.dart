@@ -68,78 +68,66 @@ class _ApplyScreenState extends State<ApplyScreen> {
       _errorMessage = null;
     });
 
-      try {
-        final authService = Provider.of<AuthService>(context, listen: false);
-        final jobService = Provider.of<JobService>(context, listen: false);
-        
-        if (authService.user == null) {
-          setState(() {
-            _errorMessage = 'You must be logged in to apply';
-            _isSubmitting = false;
-          });
-          return;
-        }
-        
-        // In a real app, you'd upload the resume to storage
-        // and get a download URL. For this example, we'll use a mock URL.
-        String mockResumeUrl = 'https://example.com/resumes/${authService.user!.id}_${DateTime.now().millisecondsSinceEpoch}.pdf';
-        
-        // Apply for the job
-        await jobService.applyForJob(
-          jobId: widget.job.id,
-          userId: authService.user!.id,
-          resumeUrl: mockResumeUrl,
-          coverLetter: _coverLetterController.text.trim(),
-        );
-        
-        // Update user's applied jobs
-        await authService.addAppliedJob(widget.job.id);
-        
-        if (mounted) {
-          // Show success dialog
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => AlertDialog(
-              title: const Text('Application Submitted'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                    size: 64,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Your application for ${widget.job.title} has been submitted successfully!',
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close dialog
-                    Navigator.of(context).pop(); // Go back to job details
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            ),
-          );
-        }
-      } catch (e) {
+    try {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final jobService = Provider.of<JobService>(context, listen: false);
+      final storageService = Provider.of<StorageService>(context, listen: false);
+
+      if (authService.user == null) {
         setState(() {
-          _errorMessage = 'Failed to submit application: $e';
+          _errorMessage = 'You must be logged in to apply';
+          _isSubmitting = false;
         });
-      } finally {
-        if (mounted) {
-          setState(() {
-            _isSubmitting = false;
-          });
-        }
+        return;
       }
+
+      final resumeUrl = await storageService.uploadResume(
+        _resumeFile!,
+        authService.user!.id,
+      );
+
+      await jobService.applyForJob(
+        jobId: widget.job.id,
+        userId: authService.user!.id,
+        resumeUrl: resumeUrl,
+        coverLetter: _coverLetterController.text.trim(),
+      );
+
+      await authService.addAppliedJob(widget.job.id);
+
+      if (!mounted) return;
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => AlertDialog(
+          title: const Text('Application Submitted'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.check_circle, color: Colors.green, size: 64),
+              const SizedBox(height: 16),
+              Text(
+                'Your application for ${widget.job.title} has been submitted successfully!',
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                  ..pop()
+                  ..pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      setState(() => _errorMessage = 'Failed to submit application: $e');
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
     }
   }
 
