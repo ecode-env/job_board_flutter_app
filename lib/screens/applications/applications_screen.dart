@@ -22,7 +22,8 @@ class ApplicationsScreen extends StatefulWidget {
   State<ApplicationsScreen> createState() => _ApplicationsScreenState();
 }
 
-class _ApplicationsScreenState extends State<ApplicationsScreen> with SingleTickerProviderStateMixin {
+class _ApplicationsScreenState extends State<ApplicationsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isLoading = true;
   String? _errorMessage;
