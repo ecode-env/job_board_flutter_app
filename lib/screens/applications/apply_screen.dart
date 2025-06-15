@@ -52,9 +52,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
         });
       }
     } catch (e) {
-      setState(() {
-        _errorMessage = 'Failed to pick file: $e';
-      });
+      setState(() => _errorMessage = 'Failed to pick file: $e');
     }
   }
 
