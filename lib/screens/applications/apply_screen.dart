@@ -57,13 +57,11 @@ class _ApplyScreenState extends State<ApplyScreen> {
   }
 
   Future<void> _submitApplication() async {
-    if (_formKey.currentState!.validate()) {
-      if (_resumeFile == null) {
-        setState(() {
-          _errorMessage = 'Please upload your resume';
-        });
-        return;
-      }
+    if (!_formKey.currentState!.validate()) return;
+    if (_resumeFile == null) {
+      setState(() => _errorMessage = 'Please upload your resume');
+      return;
+    }
 
       setState(() {
         _isSubmitting = true;
