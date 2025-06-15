@@ -190,11 +190,10 @@ class _ApplyScreenState extends State<ApplyScreen> {
                     ],
                   ),
                 ),
-                
                 const SizedBox(height: 24),
-                
+
                 // Error Message
-                if (_errorMessage != null) ...[
+                if (_errorMessage != null)
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
