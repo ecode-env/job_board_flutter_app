@@ -261,25 +261,14 @@ class _ApplyScreenState extends State<ApplyScreen> {
                                       : Theme.of(context).colorScheme.onSurface,
                                 ),
                               ),
-                              if (_resumeFileName != null) ...[
-                                const SizedBox(height: 4),
-                                Text(
-                                  _resumeFileName!,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                                  ),
+                              const SizedBox(height: 4),
+                              Text(
+                                _resumeFileName ?? 'PDF, DOC, DOCX (max 5 MB)',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                                 ),
-                              ] else ...[
-                                const SizedBox(height: 4),
-                                Text(
-                                  'PDF, DOC, or DOCX (max 5MB)',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ],
                           ),
                         ),
