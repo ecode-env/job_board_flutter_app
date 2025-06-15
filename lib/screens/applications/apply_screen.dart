@@ -134,10 +134,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Apply for Job'),
-        elevation: 0,
-      ),
+      appBar: AppBar(title: const Text('Apply for Job'), elevation: 0),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
