@@ -51,7 +51,6 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
       _isLoading = true;
       _errorMessage = null;
     });
-
     try {
       final authService = Provider.of<AuthService>(context, listen: false);
       final jobService = Provider.of<JobService>(context, listen: false);
