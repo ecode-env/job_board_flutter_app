@@ -342,7 +342,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                   ),
 
                   const SizedBox(height: 16),
-                  
+
                   // Tabs
                   TabBar(
                     controller: _tabController,
