@@ -152,14 +152,11 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
                 color:
                 Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
             const SizedBox(height: 16),
-            Text(
-              'No jobs posted yet',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
+            Text('No jobs posted yet',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface)),
             const SizedBox(height: 8),
             Text(
               'Create your first job posting',
