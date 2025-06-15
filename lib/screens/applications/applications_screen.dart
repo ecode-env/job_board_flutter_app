@@ -235,9 +235,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
                         .withOpacity(0.7))),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: () {
-                // Navigate to jobs screen
-              },
+              onPressed: () {},
               icon: const Icon(Icons.search),
               label: const Text('Find Jobs'),
             ),
