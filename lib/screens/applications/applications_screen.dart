@@ -175,7 +175,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         ),
       );
     }
-    
+
     return RefreshIndicator(
       onRefresh: _loadData,
       color: Theme.of(context).colorScheme.primary,
