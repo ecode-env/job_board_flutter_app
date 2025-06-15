@@ -1,12 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:job_board_flutter_app/models/job_model.dart';
-import 'package:job_board_flutter_app/services/auth_service.dart';
-import 'package:job_board_flutter_app/services/job_service.dart';
-import 'package:job_board_flutter_app/widgets/custom_button.dart';
-import 'package:job_board_flutter_app/widgets/custom_text_field.dart';
-import 'package:job_board_flutter_app/utils/validators.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
