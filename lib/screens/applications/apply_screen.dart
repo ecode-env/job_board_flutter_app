@@ -295,7 +295,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                   maxLines: 6,
                   validator: Validators.validateRequired,
                 ),
-                
+
                 const SizedBox(height: 32),
                 
                 // Submit Button
