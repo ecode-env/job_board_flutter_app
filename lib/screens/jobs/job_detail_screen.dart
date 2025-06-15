@@ -355,8 +355,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                       Tab(text: 'Company'),
                     ],
                   ),
-                  
-                  // Tab Content
+
+                  // Tab Content area with fixed height
                   SizedBox(
                     height: 300,
                     child: TabBarView(
