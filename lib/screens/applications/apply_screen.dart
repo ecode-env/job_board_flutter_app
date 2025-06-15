@@ -143,7 +143,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Job Info
+                // Job Info Card
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
