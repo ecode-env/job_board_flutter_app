@@ -17,8 +17,7 @@ class JobService with ChangeNotifier {
 
   String _locationFilter = '';
   String get locationFilter => _locationFilter;
-  
-  // Set search query
+
   void setSearchQuery(String query) {
     _searchQuery = query;
     notifyListeners();
