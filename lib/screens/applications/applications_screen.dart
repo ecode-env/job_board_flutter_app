@@ -89,15 +89,18 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         elevation: 0,
         bottom: widget.showPostedJobs
             ? TabBar(
-                controller: _tabController,
-                labelColor: Theme.of(context).colorScheme.primary,
-                unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                indicatorColor: Theme.of(context).colorScheme.primary,
-                tabs: const [
-                  Tab(text: 'Posted Jobs'),
-                  Tab(text: 'Applications'),
-                ],
-              )
+          controller: _tabController,
+          labelColor: Theme.of(context).colorScheme.primary,
+          unselectedLabelColor: Theme.of(context)
+              .colorScheme
+              .onSurface
+              .withOpacity(0.7),
+          indicatorColor: Theme.of(context).colorScheme.primary,
+          tabs: const [
+            Tab(text: 'Posted Jobs'),
+            Tab(text: 'Applications'),
+          ],
+        )
             : null,
       ),
       body: _isLoading
