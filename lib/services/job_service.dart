@@ -11,7 +11,7 @@ class JobService with ChangeNotifier {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final List<JobModel> _jobs = [];
   List<JobModel> get jobs => _jobs;
-  
+
   String _searchQuery = '';
   String get searchQuery => _searchQuery;
   
