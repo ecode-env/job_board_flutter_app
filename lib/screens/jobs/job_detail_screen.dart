@@ -101,7 +101,9 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
               // Navigate to login screen
             },
             child: const Text('Login'),
