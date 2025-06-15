@@ -131,7 +131,7 @@ class JobCard extends StatelessWidget {
             ),
 
             const SizedBox(height: 8),
-            
+
             // Job description preview
             Text(
               job.shortDescription,
