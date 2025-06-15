@@ -54,7 +54,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
     try {
       final authService = Provider.of<AuthService>(context, listen: false);
       final jobService = Provider.of<JobService>(context, listen: false);
-      
+
       if (authService.user == null) {
         setState(() {
           _errorMessage = 'You need to be logged in to view applications';
