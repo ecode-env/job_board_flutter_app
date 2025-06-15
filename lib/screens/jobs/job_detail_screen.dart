@@ -315,8 +315,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                       ],
                     ),
                   ),
-                  
-                  // Quick Info
+                  // Quick Info Chips (horizontal scroll)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
