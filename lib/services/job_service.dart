@@ -171,18 +171,20 @@ class JobService with ChangeNotifier {
           .where('jobId', isEqualTo: jobId)
           .orderBy('appliedDate', descending: true)
           .get();
-      
-      List<ApplicationModel> applications = [];
-      
-      for (var doc in snapshot.docs) {
-        ApplicationModel application = ApplicationModel.fromMap(
-          doc.data() as Map<String, dynamic>,
-          doc.id,
-        );
-        applications.add(application);
-      }
-      
-      return applications;
+
+      return snapshot.docs
+          .map((doc) => ApplicationModel.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteJob(String jobId) async {
+    try {
+      await _firestore.collection('jobs').doc(jobId).delete();
+      _jobs.removeWhere((job) => job.id == jobId);
+      notifyListeners();
     } catch (e) {
       rethrow;
     }
