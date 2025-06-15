@@ -130,8 +130,7 @@ class JobService with ChangeNotifier {
       rethrow;
     }
   }
-  
-  // Get user's job applications
+
   Future<List<ApplicationModel>> getUserApplications(String userId) async {
     try {
       QuerySnapshot snapshot = await _firestore
@@ -139,18 +138,10 @@ class JobService with ChangeNotifier {
           .where('userId', isEqualTo: userId)
           .orderBy('appliedDate', descending: true)
           .get();
-      
-      List<ApplicationModel> applications = [];
-      
-      for (var doc in snapshot.docs) {
-        ApplicationModel application = ApplicationModel.fromMap(
-          doc.data() as Map<String, dynamic>,
-          doc.id,
-        );
-        applications.add(application);
-      }
-      
-      return applications;
+
+      return snapshot.docs
+          .map((doc) => ApplicationModel.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+          .toList();
     } catch (e) {
       rethrow;
     }
