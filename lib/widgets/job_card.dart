@@ -111,7 +111,7 @@ class JobCard extends StatelessWidget {
                     if (isSaved) {
                       authService.unsaveJob(job.id);
                     } else {
-                      Provider.of<AuthService>(context, listen: false).saveJob(job.id);
+                      authService.saveJob(job.id);
                     }
                   },
                 ),
