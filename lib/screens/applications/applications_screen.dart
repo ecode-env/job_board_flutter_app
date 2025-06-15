@@ -84,7 +84,8 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.showPostedJobs ? 'My Posted Jobs' : 'My Applications'),
+        title:
+        Text(widget.showPostedJobs ? 'My Posted Jobs' : 'My Applications'),
         elevation: 0,
         bottom: widget.showPostedJobs
             ? TabBar(
