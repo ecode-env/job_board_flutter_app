@@ -17,9 +17,10 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
-    final isSaved = authService.isJobSaved(job.id);
-    final isApplied = authService.isJobApplied(job.id);
+    final authService = Provider.of<AuthService?>(context, listen: false);
+
+    final bool isSaved = authService?.isJobSaved(job.id) ?? false;
+    final bool isApplied = authService?.isJobApplied(job.id) ?? false;
 
     return InkWell(
       onTap: () {
