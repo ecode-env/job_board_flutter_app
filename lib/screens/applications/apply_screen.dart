@@ -2,7 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:io';
+
+import '../../models/job_model.dart';
+import '../../services/auth_service.dart';
+import '../../services/job_service.dart';
+import '../../services/storage_service.dart';
+import '../../utils/validators.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_text_field.dart';
 
 class ApplyScreen extends StatefulWidget {
   final JobModel job;
