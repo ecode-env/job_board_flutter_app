@@ -282,7 +282,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Cover Letter
                 Text(
                   'Cover Letter',
