@@ -257,7 +257,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
           if (job == null) {
             return const SizedBox.shrink();
           }
-          
+
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: ApplicationCard(
