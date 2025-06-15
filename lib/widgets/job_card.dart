@@ -144,7 +144,7 @@ class JobCard extends StatelessWidget {
             ),
 
             const SizedBox(height: 16),
-            
+
             // Job info chips
             Row(
               children: [
