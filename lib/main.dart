@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             darkTheme: themeService.darkTheme,
             themeMode: themeService.themeMode,
             home: StreamBuilder<UserModel?>(
-              stream: Provider.of<AuthService>(context, listen: false).authStateChanges,
+              stream: context.read<AuthService>().authStateChanges,
               builder: (context, snapshot) {
                 return const SplashScreen();
               },
