@@ -373,7 +373,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                             ),
                           ),
                         ),
-                        
+
                         // Requirements Tab
                         Padding(
                           padding: const EdgeInsets.all(16),
