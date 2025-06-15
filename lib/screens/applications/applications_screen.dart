@@ -16,7 +16,7 @@ class ApplicationsScreen extends StatefulWidget {
   const ApplicationsScreen({
     Key? key,
     this.showPostedJobs = false,
-  });
+  }) : super(key: key);
 
   @override
   State<ApplicationsScreen> createState() => _ApplicationsScreenState();
