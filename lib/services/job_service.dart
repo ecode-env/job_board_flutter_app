@@ -47,60 +47,35 @@ class JobService with ChangeNotifier {
     if (_searchQuery.isEmpty && _locationFilter.isEmpty) {
       return _jobs;
     }
-    
     return _jobs.where((job) {
       bool matchesSearch = _searchQuery.isEmpty ||
           job.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           job.company.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           job.description.toLowerCase().contains(_searchQuery.toLowerCase());
-      
       bool matchesLocation = _locationFilter.isEmpty ||
           job.location.toLowerCase().contains(_locationFilter.toLowerCase());
-      
       return matchesSearch && matchesLocation;
     }).toList();
   }
-  
-  // Get job by ID
+
   Future<JobModel?> getJobById(String jobId) async {
     try {
       DocumentSnapshot doc = await _firestore.collection('jobs').doc(jobId).get();
-      
       if (doc.exists) {
         return JobModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
       }
-      
       return null;
     } catch (e) {
       rethrow;
     }
   }
-  
-  // Create a new job
+
   Future<JobModel> createJob(JobModel job) async {
     try {
       DocumentReference docRef = await _firestore.collection('jobs').add(job.toMap());
-      
-      JobModel newJob = JobModel(
-        id: docRef.id,
-        title: job.title,
-        company: job.company,
-        description: job.description,
-        location: job.location,
-        requirements: job.requirements,
-        salary: job.salary,
-        posterID: job.posterID,
-        contactEmail: job.contactEmail,
-        contactPhone: job.contactPhone,
-        postedDate: job.postedDate,
-        employmentType: job.employmentType,
-        companyLogo: job.companyLogo,
-        isRemote: job.isRemote,
-      );
-      
+      JobModel newJob = job.copyWith(id: docRef.id);
       _jobs.add(newJob);
       notifyListeners();
-      
       return newJob;
     } catch (e) {
       rethrow;
