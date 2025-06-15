@@ -93,7 +93,9 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
             },
             child: const Text('Cancel'),
           ),
