@@ -32,20 +32,17 @@ class JobService with ChangeNotifier {
     try {
       QuerySnapshot snapshot = await _firestore.collection('jobs').orderBy('postedDate', descending: true).get();
       _jobs.clear();
-      
       for (var doc in snapshot.docs) {
         JobModel job = JobModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
         _jobs.add(job);
       }
-      
       notifyListeners();
       return _jobs;
     } catch (e) {
       rethrow;
     }
   }
-  
-  // Get filtered jobs
+
   List<JobModel> getFilteredJobs() {
     if (_searchQuery.isEmpty && _locationFilter.isEmpty) {
       return _jobs;
