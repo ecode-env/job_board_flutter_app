@@ -22,7 +22,6 @@ class ApplyScreen extends StatefulWidget {
 class _ApplyScreenState extends State<ApplyScreen> {
   final _formKey = GlobalKey<FormState>();
   final _coverLetterController = TextEditingController();
-  
   File? _resumeFile;
   String? _resumeFileName;
   bool _isSubmitting = false;
