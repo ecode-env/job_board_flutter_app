@@ -292,9 +292,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                 CustomTextField(
                   controller: _coverLetterController,
                   hintText: 'Why should you be hired for this position?',
-                  maxLines: 8,
-                  textInputAction: TextInputAction.newline,
-                  keyboardType: TextInputType.multiline,
+                  maxLines: 6,
                   validator: Validators.validateRequired,
                 ),
                 
