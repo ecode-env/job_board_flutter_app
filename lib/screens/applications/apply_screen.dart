@@ -202,10 +202,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                     ),
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.error_outline,
-                          color: Theme.of(context).colorScheme.error,
-                        ),
+                        Icon(Icons.error_outline, color: Theme.of(context).colorScheme.error),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
