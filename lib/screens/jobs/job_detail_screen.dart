@@ -379,6 +379,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                           padding: const EdgeInsets.all(16),
                           child: ListView.builder(
                             itemCount: widget.job.requirements.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
