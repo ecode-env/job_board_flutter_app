@@ -27,7 +27,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
   late TabController _tabController;
   bool _isLoading = true;
   String? _errorMessage;
-  
+
   List<JobModel> _postedJobs = [];
   List<ApplicationModel> _applications = [];
   Map<String, JobModel> _jobsMap = {};
