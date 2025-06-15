@@ -260,10 +260,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: ApplicationCard(
-              application: application,
-              job: job,
-            ),
+            child: ApplicationCard(application: application, job: job),
           );
         },
       ),
