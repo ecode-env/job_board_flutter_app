@@ -48,6 +48,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
         setState(() {
           _resumeFile = picked;
           _resumeFileName = result.files.single.name;
+          _errorMessage = null;
         });
       }
     } catch (e) {
