@@ -408,7 +408,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                             },
                           ),
                         ),
-                        
+
                         // Company Tab
                         Padding(
                           padding: const EdgeInsets.all(16),
