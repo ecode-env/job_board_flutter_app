@@ -111,41 +111,33 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         ),
       )
           : _errorMessage != null
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 48,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        _errorMessage!,
-                        style: const TextStyle(fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: _loadData,
-                        child: const Text('Try Again'),
-                      ),
-                    ],
-                  ),
-                )
-              : widget.showPostedJobs
-                  ? TabBarView(
-                      controller: _tabController,
-                      children: [
-                        // Posted Jobs Tab
-                        _buildPostedJobsList(),
-                        
-                        // Applications Tab
-                        _buildApplicationsList(),
-                      ],
-                    )
-                  : _buildApplicationsList(),
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline,
+                size: 48, color: Colors.red),
+            const SizedBox(height: 16),
+            Text(_errorMessage!,
+                style: const TextStyle(fontSize: 16),
+                textAlign: TextAlign.center),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: _loadData,
+              child: const Text('Try Again'),
+            ),
+          ],
+        ),
+      )
+          : widget.showPostedJobs
+          ? TabBarView(
+        controller: _tabController,
+        children: [
+          _buildPostedJobsList(),
+          _buildApplicationsList(),
+        ],
+      )
+          : _buildApplicationsList(),
     );
   }
 
