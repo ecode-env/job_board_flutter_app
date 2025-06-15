@@ -65,8 +65,8 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
 
       await jobService.getAllJobs();
       if (widget.showPostedJobs) {
-        // For job posters, load their posted jobs
-        _postedJobs = await jobService.getJobsPostedByUser(authService.user!.id);
+        _postedJobs =
+        await jobService.getJobsPostedByUser(authService.user!.id);
       }
       
       // For all users, load their applications
