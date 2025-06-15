@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 import 'package:job_board_flutter_app/models/job_model.dart';
 import 'package:job_board_flutter_app/models/application_model.dart';
 import 'package:uuid/uuid.dart';
