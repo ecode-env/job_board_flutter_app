@@ -68,11 +68,8 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         _postedJobs =
         await jobService.getJobsPostedByUser(authService.user!.id);
       }
-      
-      // For all users, load their applications
-      _applications = await jobService.getUserApplications(authService.user!.id);
-      
-      // Create a map of jobs for quick lookup
+      _applications =
+      await jobService.getUserApplications(authService.user!.id);
       _jobsMap = {for (var job in jobService.jobs) job.id: job};
     } catch (e) {
       setState(() {
