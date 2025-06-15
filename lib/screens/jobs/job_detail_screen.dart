@@ -434,12 +434,13 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                                   ),
                                 ),
                                 const SizedBox(height: 24),
-                                SafeArea(child: Text(
-                                  'Contact Information',
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
+                                SafeArea(
+                                  child: Text(
+                                    'Contact Information',
+                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
                                 ),
                                 const SizedBox(height: 16),
                                 Row(
