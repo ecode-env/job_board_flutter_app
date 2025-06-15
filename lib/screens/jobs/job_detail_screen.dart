@@ -487,7 +487,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: 100), // Bottom padding for buttons
                 ],
               ),
