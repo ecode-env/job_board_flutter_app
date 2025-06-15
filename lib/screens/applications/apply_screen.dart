@@ -39,8 +39,12 @@ class _ApplyScreenState extends State<ApplyScreen> {
         type: FileType.custom,
         allowedExtensions: ['pdf', 'doc', 'docx'],
       );
-
-      if (result != null) {
+      if (result != null && result.files.single.path != null) {
+        final picked = File(result.files.single.path!);
+        if (picked.lengthSync() > 5 * 1024 * 1024) {
+          setState(() => _errorMessage = 'File too large—max 5 MB');
+          return;
+        }
         setState(() {
           _resumeFile = File(result.files.single.path!);
           _resumeFileName = result.files.single.name;
