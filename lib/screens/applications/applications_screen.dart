@@ -147,11 +147,10 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.work_off,
-              size: 64,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-            ),
+            Icon(Icons.work_off,
+                size: 64,
+                color:
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
             const SizedBox(height: 16),
             Text(
               'No jobs posted yet',
