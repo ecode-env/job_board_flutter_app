@@ -162,8 +162,7 @@ class JobService with ChangeNotifier {
       rethrow;
     }
   }
-  
-  // Get applications for a specific job
+
   Future<List<ApplicationModel>> getJobApplications(String jobId) async {
     try {
       QuerySnapshot snapshot = await _firestore
