@@ -76,11 +76,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen>
         _errorMessage = 'Failed to load data. Please try again.';
       });
     } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
